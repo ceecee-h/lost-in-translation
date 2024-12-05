@@ -5,7 +5,12 @@ from widgets.submit_button import SubmitButton
 
 # actions
 def hexToChar():
-    print('Submitted')
+    result = ''
+    for bit in bits:
+        byte = bytes.fromhex(bit.text)
+        ascii_char = byte.decode("ASCII")
+        result += ascii_char
+    print('Submitted: ' + result)
 
 # pygame setup
 pg.init()
