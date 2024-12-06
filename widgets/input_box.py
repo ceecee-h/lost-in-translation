@@ -1,10 +1,8 @@
 import pygame as pg
+from constants import *
 
 pg.init()
-COLOR_INACTIVE = pg.Color('lightskyblue3')
-COLOR_ACTIVE = pg.Color('dodgerblue2')
-FONT = pg.font.Font(None, 80)
-
+hex_chars = '0123456789ABCDEFabcdef'
 class InputBox:
 
     def __init__(self, x, y, w, h, text='', length=2):
@@ -34,7 +32,8 @@ class InputBox:
                 elif event.key == pg.K_BACKSPACE:
                     self.text = self.text[:-1]
                 elif len(self.text) < self.length:
-                    self.text += event.unicode
+                    if event.unicode in hex_chars:       
+                        self.text += event.unicode
                 else:
                     # spill over to next box
                     print(self.text)

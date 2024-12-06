@@ -3,21 +3,18 @@ from constants import *
 
 pg.init()
 
-class SubmitButton:
+class CharBox:
 
-    def __init__(self, x, y, w, h, text, action):
+    def __init__(self, x, y, w, h, text='', length=2):
         self.rect = pg.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
+        self.text = text
+        self.length = length
         self.txt_surface = FONT.render(text, True, self.color)
-        self.action = action
 
 
     def handle_event(self, event):
-        if event.type == pg.MOUSEBUTTONDOWN:
-            # If the user clicked on the submit button
-            if self.rect.collidepoint(event.pos):
-                # call action
-                self.action()
+        pass
 
     def update(self):
         # Resize the box if the text is too long.
