@@ -8,14 +8,14 @@ pg.init()
 class InputMode():
     
     def __init__(self):
-        self.bit1 = InputBox(50, 450, 100, 100)
-        self.bit2 = InputBox(250, 450, 100, 100)
-        self.bit3 = InputBox(450, 450, 100, 100)
-        self.bit4 = InputBox(650, 450, 100, 100)
-        self.bit5 = InputBox(850, 450, 100, 100)
+        self.bit1 = InputBox(30, 350, 100, 100)
+        self.bit2 = InputBox(190, 350, 100, 100)
+        self.bit3 = InputBox(350, 350, 100, 100)
+        self.bit4 = InputBox(510, 350, 100, 100)
+        self.bit5 = InputBox(670, 350, 100, 100)
         self.bits = [self.bit1, self.bit2, self.bit3, self.bit4, self.bit5]
 
-        self.submit = SubmitButton(400, 650, 200, 80, text='TRANSLATE', action=self.hexToChar)
+        self.submit = SubmitButton(300, 500, 200, 40, text='TRANSLATE', action=self.hexToChar)
         self.swapRequest = False
         self.text = ''
     
@@ -47,6 +47,9 @@ class InputMode():
     def hexToChar(self):
         result = ''
         for bit in self.bits:
+            if len(bit.text) < 2:
+                result += '?'
+                continue
             byte = bytes.fromhex(bit.text)
             ascii_char = byte.decode("ASCII")
             result += ascii_char
@@ -58,15 +61,15 @@ class StaticMode():
     
     def __init__(self, text):
         self.text = text if len(text) == 5 else text + ''.join(['?' for _ in range(5-len(text))])
-        self.ch1 = CharBox(50, 450, 100, 100, text=self.text[0])
-        self.ch2 = CharBox(250, 450, 100, 100, text=self.text[1])
-        self.ch3 = CharBox(450, 450, 100, 100, text=self.text[2])
-        self.ch4 = CharBox(650, 450, 100, 100, text=self.text[3])
-        self.ch5 = CharBox(850, 450, 100, 100, text=self.text[4])
+        self.ch1 = CharBox(30, 350, 100, 100, text=self.text[0])
+        self.ch2 = CharBox(190, 350, 100, 100, text=self.text[1])
+        self.ch3 = CharBox(350, 350, 100, 100, text=self.text[2])
+        self.ch4 = CharBox(510, 350, 100, 100, text=self.text[3])
+        self.ch5 = CharBox(670, 350, 100, 100, text=self.text[4])
         self.chs = [self.ch1, self.ch2, self.ch3, self.ch4, self.ch5]
         self.swapRequest = False
 
-        self.submit = SubmitButton(400, 650, 200, 80, text='RESET', action=self.addSwapRequest)
+        self.submit = SubmitButton(350, 500, 200, 40, text='RESET', action=self.addSwapRequest)
 
     def set_text(self, text):
         self.text = text if len(text) == 5 else text + ''.join(['?' for _ in range(5-len(text))])

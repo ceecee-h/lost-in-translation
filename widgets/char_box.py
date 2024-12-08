@@ -10,7 +10,7 @@ class CharBox:
         self.color = COLOR_INACTIVE
         self.text = text
         self.length = length
-        self.txt_surface = FONT.render(text, True, self.color)
+        self.txt_surface = INPUT_FONT.render(text, True, self.color)
 
 
     def handle_event(self, event):

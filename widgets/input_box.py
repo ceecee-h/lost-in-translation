@@ -10,7 +10,7 @@ class InputBox:
         self.color = COLOR_INACTIVE
         self.text = text
         self.length = length
-        self.txt_surface = FONT.render(text, True, self.color)
+        self.txt_surface = INPUT_FONT.render(text, True, self.color)
         self.active = False
         self.full = False
 
@@ -39,7 +39,7 @@ class InputBox:
                     print(self.text)
                     self.full = True
                 # Re-render the text.
-                self.txt_surface = FONT.render(self.text, True, self.color)
+                self.txt_surface = INPUT_FONT.render(self.text, True, self.color)
 
     def update(self):
         # Resize the box if the text is too long.
