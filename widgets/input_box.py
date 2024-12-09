@@ -5,14 +5,18 @@ pg.init()
 hex_chars = '0123456789ABCDEFabcdef'
 class InputBox:
 
-    def __init__(self, x, y, w, h, text='', length=2):
+    def __init__(self, x, y, w, h, text='', length=2, next=None, prev=None):
         self.rect = pg.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
         self.text = text
         self.length = length
         self.txt_surface = INPUT_FONT.render(text, True, self.color)
         self.active = False
-        self.full = False
+        self.next = next
+        self.prev = prev
+        
+    def setNext(self, next):
+        self.next = next
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:
@@ -23,23 +27,28 @@ class InputBox:
             else:
                 self.active = False
             # Change the current color of the input box.
-            self.color = COLOR_ACTIVE if self.active else COLOR_INACTIVE
         if event.type == pg.KEYDOWN:
             if self.active:
                 if event.key == pg.K_RETURN:
                     print(self.text)
-                    self.text = ''
                 elif event.key == pg.K_BACKSPACE:
+                    if len(self.text) == 0:
+                        self.active = False
+                        if self.prev:
+                            self.prev.active = True
+                            self.prev.handle_event(event)
                     self.text = self.text[:-1]
                 elif len(self.text) < self.length:
                     if event.unicode in hex_chars:       
                         self.text += event.unicode
                 else:
                     # spill over to next box
-                    print(self.text)
-                    self.full = True
-                # Re-render the text.
-                self.txt_surface = INPUT_FONT.render(self.text, True, self.color)
+                    if self.next:
+                        self.next.active = True
+                    self.active = False
+        # Re-render the text.                
+        self.color = COLOR_ACTIVE if self.active else COLOR_INACTIVE
+        self.txt_surface = INPUT_FONT.render(self.text, True, self.color)
 
     def update(self):
         # Resize the box if the text is too long.

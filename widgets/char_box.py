@@ -5,11 +5,10 @@ pg.init()
 
 class CharBox:
 
-    def __init__(self, x, y, w, h, text='', length=2):
+    def __init__(self, x, y, w, h, text=''):
         self.rect = pg.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
         self.text = text
-        self.length = length
         self.txt_surface = INPUT_FONT.render(text, True, self.color)
 
 
